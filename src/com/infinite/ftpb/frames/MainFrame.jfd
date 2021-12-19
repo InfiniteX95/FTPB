@@ -1,0 +1,48 @@
+JFDML JFormDesigner: "7.0.5.0.404" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :::p, par l {seq {comp btnSettings:::p::p, space :::p, comp btnConnect:::p::p, space :::p, comp btnDisconnect:::p::p, space :0:270:x}, seq t {par t {comp scrollPane::l::526:x, comp btnBackup::::526:x}, space :::p}}}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp scrollPane::::184:x, space :::p, par b {comp btnSettings::b:p::p, comp btnConnect::b:p::p, comp btnDisconnect::b:p::p}, space :::p, comp btnBackup:::p::p, space :::p}}"
+		} ) {
+			name: "this"
+			"minimumSize": new java.awt.Dimension( 540, 300 )
+			"title": "FTPB"
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane"
+				"toolTipText": "FTPB"
+				"autoscrolls": true
+				add( new FormComponent( "javax.swing.JTextPane" ) {
+					name: "consolePane"
+					"font": new java.awt.Font( "Consolas", 0, 12 )
+					"foreground": sfield java.awt.Color green
+					"editable": false
+					auxiliary() {
+						"JavaCodeGenerator.variableGetter": true
+					}
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnSettings"
+				"text": "Settings"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnBackup"
+				"text": "Backup Now !"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnConnect"
+				"text": "Connect"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnDisconnect"
+				"text": "Disconnect"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 540, 300 )
+		} )
+	}
+}

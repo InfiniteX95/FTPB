@@ -1,0 +1,85 @@
+JFDML JFormDesigner: "7.0.5.0.404" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:12:p, par l {seq {par t {comp lblAdress:::p::p, comp labelUsername::t:p::p, comp labelFTPPath::t:p::p, comp labelFieldLocalPath:::p::p}, space :::p, par t {seq t {comp textFieldLocalPath:::p:250:p, space :::p, comp btnLocalBrowse:::::x}, seq t {comp textFieldFTPPath:::p:250:p, space :::p, comp btnFTPBrowse:::::x}, seq {par l {comp textFieldUsername::t:p:134:p, comp textFieldAdress:::p:135:p}, par l {seq {space :0:35:x, comp lblPort:::p::p}, seq {space ::7:x, comp labelPassword:::p::p}}, space :::x, par l {comp textFieldPort:::p:147:p, comp passwordField:::p:147:p}}}}, seq {comp checkBoxDateTime:::p::p, space u:::p, par l {seq {space :0:49:x, comp btnSave:::p::p, space :::p, comp btnExit:::p::p}, seq l {comp checkBoxZIP:::p::p, space :0:0:x}}}}, space :p:12:p}}"
+			"$verticalGroup": "par l {seq l {space :p:10:p, par b {comp textFieldPort::b:p::p, comp textFieldAdress::b:p::p, comp lblAdress::b:p::p, comp lblPort::b:p::p}, space :::p, par b {comp labelUsername::b:p::p, comp passwordField::b:p::p, comp textFieldUsername::b:p::p, comp labelPassword::b:p::p}, space s:::p, par b {comp textFieldFTPPath::b:p::p, comp labelFTPPath::b:p::p, comp btnFTPBrowse::b:p::p}, space :::p, par b {comp textFieldLocalPath::b:p::p, comp btnLocalBrowse::b:p::p, comp labelFieldLocalPath::b:p::p}, space u:::p, par t {seq t {comp checkBoxDateTime:::p::p, space :::x}, seq t {comp checkBoxZIP:::p::p, space :::x, par b {comp btnSave::b:p::p, comp btnExit::b:p::p}, space :p:14:p}}}}"
+		} ) {
+			name: "this"
+			"title": "Settings"
+			"resizable": false
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblAdress"
+				"text": "Adress : "
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textFieldAdress"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblPort"
+				"text": "Port : "
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textFieldPort"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelUsername"
+				"text": "Username : "
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textFieldUsername"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelPassword"
+				"text": "Password : "
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelFTPPath"
+				"text": "FTP Path : "
+				"toolTipText": "FTP Path, empty = root"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textFieldFTPPath"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnFTPBrowse"
+				"text": "Browse..."
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelFieldLocalPath"
+				"text": "Local Path : "
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textFieldLocalPath"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnLocalBrowse"
+				"text": "Browse..."
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "checkBoxDateTime"
+				"text": "Create new dir with date and time"
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "checkBoxZIP"
+				"text": "ZIP"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnExit"
+				"text": "Exit"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnSave"
+				"text": "Save"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 450, 275 )
+		} )
+	}
+}
