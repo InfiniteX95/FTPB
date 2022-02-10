@@ -30,18 +30,12 @@ public class SettingsFrame extends JFrame {
         fillConfigInfo();
     }
 
-    public static void startSettingsFrame()
-    {
-        EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
+    public static void startSettingsFrame() {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
                     frame = new SettingsFrame();
-                }
-                catch(Exception e)
-                {
+                } catch(Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -73,6 +67,8 @@ public class SettingsFrame extends JFrame {
         checkBoxZIP = new JCheckBox();
         btnExit = new JButton();
         btnSave = new JButton();
+        comboBoxProtocol = new JComboBox();
+        labelProtocol = new JLabel();
 
         //======== this ========
         setTitle("Settings");
@@ -116,6 +112,9 @@ public class SettingsFrame extends JFrame {
         //---- btnSave ----
         btnSave.setText("Save");
 
+        //---- labelProtocol ----
+        labelProtocol.setText("Protocol :");
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -155,7 +154,12 @@ public class SettingsFrame extends JFrame {
                                         .addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(checkBoxDateTime)
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addComponent(checkBoxDateTime)
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addComponent(labelProtocol)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(comboBoxProtocol, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(contentPaneLayout.createParallelGroup()
                                 .addGroup(contentPaneLayout.createSequentialGroup()
@@ -197,6 +201,10 @@ public class SettingsFrame extends JFrame {
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(checkBoxDateTime)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelProtocol)
+                                .addComponent(comboBoxProtocol, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(checkBoxZIP)
@@ -230,6 +238,8 @@ public class SettingsFrame extends JFrame {
     private JCheckBox checkBoxZIP;
     private JButton btnExit;
     private JButton btnSave;
+    private JComboBox comboBoxProtocol;
+    private JLabel labelProtocol;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void fillConfigInfo(){
@@ -242,13 +252,15 @@ public class SettingsFrame extends JFrame {
         textFieldFTPPath.setText(helper.getProp("path"));
         textFieldLocalPath.setText(helper.getProp("localpath"));
         checkBoxDateTime.setSelected(helper.getProp("useDateTime").equals("true") ? true : false);
+        String[] protocols = {"FTP","SFTP"};
+        for (String p : protocols) {
+            comboBoxProtocol.addItem(p.toString());
+        }
     }
 
     private void setEvents(){
-        btnSave.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 ConfigHelper helper = new ConfigHelper();
 
                 helper.setProp("adress", textFieldAdress.getText());
@@ -261,43 +273,35 @@ public class SettingsFrame extends JFrame {
             }
         });
 
-        btnExit.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btnExit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 frame.setVisible(false);
                 fillConfigInfo();
             }
         });
 
-        btnFTPBrowse.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btnFTPBrowse.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
             }
         });
 
-        btnLocalBrowse.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        btnLocalBrowse.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 JFileChooser browse = new JFileChooser(textFieldLocalPath.getText());
                 browse.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int option = browse.showOpenDialog(frame);
-                if(option == JFileChooser.APPROVE_OPTION)
-                {
+
+                if(option == JFileChooser.APPROVE_OPTION) {
                     System.out.println("selected folder : " + browse.getSelectedFile().getAbsolutePath());
                     textFieldLocalPath.setText(browse.getSelectedFile().getAbsolutePath());
                 }
             }
         });
 
-        textFieldFTPPath.addFocusListener(new FocusListener()
-        {
+        textFieldFTPPath.addFocusListener(new FocusListener() {
             @Override
-            public void focusLost(FocusEvent e)
-            {
+            public void focusLost(FocusEvent e) {
                 /*
                 String text = textFieldFTPPath.getText();
                 if(text.length() >= 1)
@@ -312,11 +316,9 @@ public class SettingsFrame extends JFrame {
             public void focusGained(FocusEvent e){}
         });
 
-        textFieldLocalPath.addFocusListener(new FocusListener()
-        {
+        textFieldLocalPath.addFocusListener(new FocusListener() {
             @Override
-            public void focusLost(FocusEvent e)
-            {
+            public void focusLost(FocusEvent e) {
                 /*
                 String text = textFieldLocalPath.getText();
                 if(text.length() >= 1)
@@ -327,7 +329,6 @@ public class SettingsFrame extends JFrame {
                     }
                 }*/
             }
-
             public void focusGained(FocusEvent e){}
         });
     }

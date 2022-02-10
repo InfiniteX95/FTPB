@@ -1,11 +1,11 @@
-JFDML JFormDesigner: "7.0.5.0.404" Java: "11.0.13" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.13" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :::p, par l {seq {comp btnSettings:::p::p, space :::p, comp btnConnect:::p::p, space :::p, comp btnDisconnect:::p::p, space :0:270:x}, seq t {par t {comp scrollPane::l::526:x, comp btnBackup::::526:x}, space :::p}}}}"
-			"$verticalGroup": "par l {seq l {space :::p, comp scrollPane::::184:x, space :::p, par b {comp btnSettings::b:p::p, comp btnConnect::b:p::p, comp btnDisconnect::b:p::p}, space :::p, comp btnBackup:::p::p, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, par l {seq {comp btnSettings:::p::p, space :::p, comp btnConnect:::p::p, space :::p, comp btnDisconnect:::p::p, space ::186:x, comp btnClear:::p::p}, comp scrollPane::l::526:x, comp btnBackup::t::526:x}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp scrollPane::::184:x, space :::p, par b {comp btnSettings::b:p::p, comp btnConnect::b:p::p, comp btnDisconnect::b:p::p, comp btnClear::b:p::p}, space :::p, comp btnBackup:::p::p, space :::p}}"
 		} ) {
 			name: "this"
 			"minimumSize": new java.awt.Dimension( 540, 300 )
@@ -19,9 +19,6 @@ new FormModel {
 					"font": new java.awt.Font( "Consolas", 0, 12 )
 					"foreground": sfield java.awt.Color green
 					"editable": false
-					auxiliary() {
-						"JavaCodeGenerator.variableGetter": true
-					}
 				} )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -39,6 +36,11 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnDisconnect"
 				"text": "Disconnect"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnClear"
+				"text": "Clear"
+				"actionCommand": "Clear"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

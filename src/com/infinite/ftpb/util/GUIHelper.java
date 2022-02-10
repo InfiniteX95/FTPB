@@ -12,8 +12,7 @@ public class GUIHelper {
     public static final Image pIcon96 = createImageIcon("/ftpb96px.png");
 
     //creates a list of existing icons
-    public static List<Image> getProgramIcon()
-    {
+    public static List<Image> getProgramIcon() {
         List<Image> images = new ArrayList<>();
         images.add(pIcon16);
         images.add(pIcon32);
@@ -23,8 +22,7 @@ public class GUIHelper {
     }
 
     //Gets an image with its path
-    public static Image createImageIcon(String path)
-    {
+    public static Image createImageIcon(String path) {
         URL imageURL = GUIHelper.class.getResource(path);
 
         if (imageURL == null) {

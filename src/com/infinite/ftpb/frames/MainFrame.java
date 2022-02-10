@@ -12,6 +12,7 @@ import com.infinite.ftpb.util.ClockHelper;
 import com.infinite.ftpb.util.ConfigHelper;
 import com.infinite.ftpb.util.FTPHelper;
 import com.infinite.ftpb.util.GUIHelper;
+import org.apache.commons.net.ftp.FTP;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,19 +35,13 @@ public class MainFrame extends JFrame {
         addClientMsgToConsole("FTPB Client Started !");
     }
 
-    public static void startMainFrame()
-    {
-        EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
+    public static void startMainFrame() {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
                     frame = new MainFrame();
                     frame.setVisible(true);
-                }
-                catch(Exception e)
-                {
+                } catch(Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -58,10 +53,6 @@ public class MainFrame extends JFrame {
         }
     }
 
-    public JTextPane getConsolePane() {
-        return consolePane;
-    }
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         scrollPane = new JScrollPane();
@@ -70,6 +61,7 @@ public class MainFrame extends JFrame {
         btnBackup = new JButton();
         btnConnect = new JButton();
         btnDisconnect = new JButton();
+        btnClear = new JButton();
 
         //======== this ========
         setMinimumSize(new Dimension(540, 300));
@@ -100,6 +92,10 @@ public class MainFrame extends JFrame {
         //---- btnDisconnect ----
         btnDisconnect.setText("Disconnect");
 
+        //---- btnClear ----
+        btnClear.setText("Clear");
+        btnClear.setActionCommand("Clear");
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -113,12 +109,11 @@ public class MainFrame extends JFrame {
                             .addComponent(btnConnect)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnDisconnect)
-                            .addGap(0, 270, Short.MAX_VALUE))
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                .addComponent(scrollPane, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                                .addComponent(btnBackup, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
-                            .addContainerGap())))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
+                            .addComponent(btnClear))
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                        .addComponent(btnBackup, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
+                    .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -129,7 +124,8 @@ public class MainFrame extends JFrame {
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSettings)
                         .addComponent(btnConnect)
-                        .addComponent(btnDisconnect))
+                        .addComponent(btnDisconnect)
+                        .addComponent(btnClear))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnBackup)
                     .addContainerGap())
@@ -137,6 +133,7 @@ public class MainFrame extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+        //btnDisconnect.setEnabled(FTPHelper.client.isConnected());
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -146,6 +143,7 @@ public class MainFrame extends JFrame {
     private JButton btnBackup;
     private JButton btnConnect;
     private JButton btnDisconnect;
+    private JButton btnClear;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void setEvents(){
@@ -153,51 +151,53 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConfigHelper helper = new ConfigHelper();
-                //connect to ftp
+                FTPHelper.FTPLogin(helper.getProp("adress"), helper.getProp("username"), helper.getProp("password"), Integer.parseInt(helper.getProp("port")));
             }
         });
+
         btnDisconnect.addActionListener(new ActionListener()
         {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                //disconnect to ftp
-            }
+            public void actionPerformed(ActionEvent e) { FTPHelper.FTPDisconnect(); }
         });
-        btnSettings.addActionListener(new ActionListener()
-        {
+
+        btnSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 SettingsFrame.frame.setVisible(true);
             }
         });
-        btnBackup.addActionListener(new ActionListener()
-        {
+
+        btnBackup.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 ConfigHelper helper = new ConfigHelper();
 
-                //String fileLocalPath = new String(helper.getProp("localpath") + "\\");
+                String fileLocalPath = new String(helper.getProp("localpath") + "\\");
 
-                //FTPAccess.backup(helper.getProp("path"), fileLocalPath);
+                FTPHelper.backup(helper.getProp("path"), fileLocalPath);
+            }
+        });
+
+        btnClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                consolePane.setText("");
             }
         });
     }
 
     public void addTextToConsole(String txt)
     {
-        getConsolePane().setText(consolePane.getText() + txt + "\n");
+        consolePane.setText(consolePane.getText() + txt + "\n");
     }
 
-    public void addServerMsgToConsole(String txt)
-    {
-        getConsolePane().setText(consolePane.getText() + "[" + ClockHelper.getActualHour() + "] SERVER : " + txt + "\n");
+    public void addServerMsgToConsole(String txt) {
+        consolePane.setText(consolePane.getText() + "[" + ClockHelper.getActualHour() + "] SERVER : " + txt + "\n");
     }
 
-    public void addClientMsgToConsole(String txt)
-    {
-        getConsolePane().setText(consolePane.getText() + "[" + ClockHelper.getActualHour() + "] CLIENT : " + txt + "\n");
+    public void addClientMsgToConsole(String txt) {
+        consolePane.setText(consolePane.getText() + "[" + ClockHelper.getActualHour() + "] CLIENT : " + txt + "\n");
     }
 }
