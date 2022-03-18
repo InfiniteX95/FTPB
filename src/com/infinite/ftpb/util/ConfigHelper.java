@@ -32,6 +32,7 @@ public class ConfigHelper {
                 prop.setProperty("path","\\");
                 prop.setProperty("localpath","C:\\FTPB");
                 prop.setProperty("useDateTime","false");
+                prop.setProperty("protocol","0");
 
                 //saving properties to project root folder
                 prop.store(new FileOutputStream(cfgPath), null);

@@ -67,7 +67,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "checkBoxZIP"
-				"text": "ZIP"
+				"text": "ZIP (not implemented)"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnExit"

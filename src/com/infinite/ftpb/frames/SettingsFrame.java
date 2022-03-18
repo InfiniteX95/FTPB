@@ -23,6 +23,8 @@ public class SettingsFrame extends JFrame {
 
     public static SettingsFrame frame;
 
+    private String[] protocols = {"FTP","SFTP"};
+
     public SettingsFrame() {
         initComponents();
         setIconImages(GUIHelper.getProgramIcon());
@@ -104,7 +106,7 @@ public class SettingsFrame extends JFrame {
         checkBoxDateTime.setText("Create new dir with date and time");
 
         //---- checkBoxZIP ----
-        checkBoxZIP.setText("ZIP");
+        checkBoxZIP.setText("ZIP (not implemented)");
 
         //---- btnExit ----
         btnExit.setText("Exit");
@@ -217,6 +219,10 @@ public class SettingsFrame extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+        for (String p : protocols) {
+            comboBoxProtocol.addItem(p.toString());
+        }
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -252,9 +258,11 @@ public class SettingsFrame extends JFrame {
         textFieldFTPPath.setText(helper.getProp("path"));
         textFieldLocalPath.setText(helper.getProp("localpath"));
         checkBoxDateTime.setSelected(helper.getProp("useDateTime").equals("true") ? true : false);
-        String[] protocols = {"FTP","SFTP"};
-        for (String p : protocols) {
-            comboBoxProtocol.addItem(p.toString());
+        try{
+            if(protocols.length > Integer.parseInt(helper.getProp("protocol")))
+                comboBoxProtocol.setSelectedIndex(Integer.parseInt(helper.getProp("protocol")));
+        }catch(NumberFormatException e){
+            helper.setProp("protocol","0");
         }
     }
 
@@ -270,6 +278,7 @@ public class SettingsFrame extends JFrame {
                 helper.setProp("path", textFieldFTPPath.getText());
                 helper.setProp("localpath", textFieldLocalPath.getText());
                 helper.setProp("useDateTime", Boolean.toString(checkBoxDateTime.isSelected()));
+                helper.setProp("protocol", String.valueOf(comboBoxProtocol.getSelectedIndex()));
             }
         });
 
