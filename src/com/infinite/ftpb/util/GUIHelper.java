@@ -32,4 +32,17 @@ public class GUIHelper {
             return (new ImageIcon(imageURL, "")).getImage();
         }
     }
+
+    //Gets an image with its path (the images are stored in the jar root)
+    public static Image getImageFromFiles(String path)
+    {
+        URL imageURL = GUIHelper.class.getResource(path);
+
+        if (imageURL == null) {
+            System.err.println("Resource not found: " + path);
+            return null;
+        } else {
+            return (new ImageIcon(imageURL, "")).getImage();
+        }
+    }
 }

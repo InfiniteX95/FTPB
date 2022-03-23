@@ -8,12 +8,11 @@ import com.infinite.ftpb.util.ConfigHelper;
 
 public class FTPB {
     public static void main(String[] args){
-        System.out.println("Hello World !");
+        System.out.println("Starting !");
         ConfigHelper.buildConfig();
-
         FlatDarkLaf.setup();
         MainFrame.startMainFrame();
-        //Systray
+        SysTrayIcon.createTrayIcon();
         SettingsFrame.startSettingsFrame();
     }
 }

@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
+import java.awt.*;
 import java.io.*;
 import java.net.SocketException;
 
@@ -25,12 +26,15 @@ public class FTPHelper {
     //Logs the client to the FTP server with given informations
     public static void FTPLogin(String adress, String user, String pass, int port){
         if(!client.isConnected()){
+            MainFrame.frame.setCursor(Cursor.WAIT_CURSOR);
+            client.setConnectTimeout(5000);
             try{
                 client.connect(adress, port);
                 showServerReply(client);
                 int replyCode = client.getReplyCode();
 
                 if(!FTPReply.isPositiveCompletion(replyCode)){
+                    MainFrame.frame.addServerMsgToConsole("Not positive completion");
                     return;
                 }
                 boolean success = client.login(user, pass);
@@ -43,15 +47,22 @@ public class FTPHelper {
                 }
                 else{
                     MainFrame.frame.addClientMsgToConsole("Successfully logged into the server !");
+                    FTPFile[] files = client.listFiles();
+                    System.out.println(files.length);
+                    for (FTPFile file : files) {
+                        System.out.println(file.getName());
+                    }
                     //update the systray icon
                 }
+
             } catch (SocketException e) {
                 MainFrame.frame.addClientMsgToConsole("Network error : can't connect to " + adress);
                 e.printStackTrace();
             } catch (IOException e) {
-                MainFrame.frame.addClientMsgToConsole("I/O error : can't send or get a command to/from the server");
+                MainFrame.frame.addClientMsgToConsole("Timed out");
                 e.printStackTrace();
             }
+            MainFrame.frame.setCursor(Cursor.getDefaultCursor());
         }
     }
 
@@ -74,7 +85,7 @@ public class FTPHelper {
 
         for(FTPFile remoteFile : remoteFiles){
             if(!remoteFile.getName().equals(".") && !remoteFile.getName().equals("..")){
-                String remoteFilePath = remotePath + "\\" + remoteFile.getName();
+                String remoteFilePath = remotePath + "/" + remoteFile.getName();
                 String localFilePath = localPath + "\\" + remoteFile.getName();
 
                 if(remoteFile.isDirectory()){
@@ -131,7 +142,7 @@ public class FTPHelper {
             }
         }
         else {
-            MainFrame.frame.addClientMsgToConsole("Can't backup files if the client isn't connected to any server.");
+            MainFrame.frame.addClientMsgToConsole("Can't backup files if the client isn't connected.");
         }
     }
 }

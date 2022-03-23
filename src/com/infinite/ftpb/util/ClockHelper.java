@@ -1,5 +1,7 @@
 package com.infinite.ftpb.util;
 
+import sun.util.calendar.BaseCalendar;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -21,6 +23,20 @@ public class ClockHelper {
 
     public static String getActualHour()
     {
-        return (LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute());
+        int hour = LocalDateTime.now().getHour();;
+        int min = LocalDateTime.now().getMinute();
+        StringBuilder sb = new StringBuilder();
+        if (hour < 10) {
+            sb.append(0).append(hour);
+        } else {
+            sb.append(hour);
+        }
+        sb.append(":");
+        if (min < 10) {
+            sb.append(0).append(min);
+        } else {
+            sb.append(min);
+        }
+        return sb.toString();
     }
 }
